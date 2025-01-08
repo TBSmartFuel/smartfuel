@@ -1,0 +1,15 @@
+meal-plan-generator/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── models/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   └── utils/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── services/
+└── docker/ 
