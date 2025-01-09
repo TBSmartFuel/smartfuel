@@ -33,7 +33,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Add healthcheck with longer intervals and more retries
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
+HEALTHCHECK --interval=15s --timeout=15s --start-period=120s --retries=10 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
 
 EXPOSE 80

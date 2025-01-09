@@ -22,5 +22,15 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['/node_modules/'],
+          // Split React and related packages
+          react: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
   },
 })
