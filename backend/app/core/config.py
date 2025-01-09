@@ -21,8 +21,11 @@ class Settings(BaseSettings):
     # CORS settings - update with actual Railway domains
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://smartfuel-frontend.up.railway.app",  # Frontend Railway domain
-        "https://smartfuel.up.railway.app"           # Main Railway domain
+        "http://localhost:80",
+        "http://localhost",
+        "https://smartfuel-frontend.up.railway.app",
+        "https://smartfuel.up.railway.app",
+        "*"  # Allow all origins during deployment
     ]
 
     class Config:
