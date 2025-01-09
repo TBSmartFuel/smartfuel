@@ -50,12 +50,3 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db 
-
-# Environment variables and secrets
-.env
-*.env
-.env.local
-.env.*.local
-
-# Docker
-docker-compose.override.yml 
