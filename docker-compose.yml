@@ -8,7 +8,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:myDB123@db/meal_plan_db2
       - SECRET_KEY=a492864c8d3f5e9b7a1c6d0e2b4f8a1937c5e9d2b4f8c1a6e3d7b9f2e5a8c4d
-      - OPENAI_API_KEY=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
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEBUG=False
       - PORT=8000
     depends_on:
