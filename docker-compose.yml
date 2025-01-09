@@ -7,7 +7,7 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://postgres:myDB123@db/meal_plan_db2
-      - SECRET_KEY=a492864c8d3f5e9b7a1c6d0e2b4f8a1937c5e9d2b4f8c1a6e3d7b9f2e5a8c4d
+      - SECRET_KEY=${SECRET_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEBUG=False
       - PORT=8000
@@ -30,7 +30,7 @@ services:
     image: postgres:15
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=myDB123
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=meal_plan_db2
     volumes:
       - postgres_data:/var/lib/postgresql/data
