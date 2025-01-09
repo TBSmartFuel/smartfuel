@@ -25,10 +25,17 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['/node_modules/'],
-          // Split React and related packages
-          react: ['react', 'react-dom', 'react-router-dom'],
+        manualChunks(id: string) {
+          if (id.indexOf('node_modules') >= 0) {
+            if (
+              id.indexOf('react') >= 0 ||
+              id.indexOf('react-dom') >= 0 ||
+              id.indexOf('react-router-dom') >= 0
+            ) {
+              return 'react-vendor';
+            }
+            return 'vendor';
+          }
         },
       },
     },
