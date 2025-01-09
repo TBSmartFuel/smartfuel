@@ -12,29 +12,33 @@ services:
       - DEBUG=False
       - PORT=8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 30s
+      interval: 15s
       timeout: 10s
-      retries: 3
+      retries: 5
+      start_period: 30s
 
   frontend:
     build: ./frontend
     ports:
       - "80:80"
     environment:
-      - REACT_APP_API_URL=http://localhost:8000
-      - REACT_APP_ENV=development
+      - REACT_APP_API_URL=http://backend:8000
+      - REACT_APP_ENV=production
       - REACT_APP_ENABLE_AUTH=true
       - REACT_APP_ENABLE_MEAL_PLANNER=true
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]
-      interval: 30s
+      interval: 15s
       timeout: 10s
-      retries: 3
+      retries: 5
+      start_period: 30s
 
   db:
     image: postgres:15
@@ -46,9 +50,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
+      interval: 15s
       timeout: 10s
-      retries: 3
+      retries: 5
+      start_period: 30s
 
 volumes:
   postgres_data: 
