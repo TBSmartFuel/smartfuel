@@ -1,59 +1,62 @@
 version: '3.8'
 
 services:
-  backend:
+  smartfuel-backend:
     build: ./backend
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:myDB123@db/meal_plan_db2
+      - DATABASE_URL=postgresql://postgres:myDB123@smartfuel-db/smartfuel_db
       - SECRET_KEY=a492864c8d3f5e9b7a1c6d0e2b4f8a1937c5e9d2b4f8c1a6e3d7b9f2e5a8c4d
       - OPENAI_API_KEY=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
       - DEBUG=False
       - PORT=8000
+      - SERVICE_NAME=smartfuel-backend
     depends_on:
-      db:
+      smartfuel-db:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 15s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 40s
 
-  frontend:
+  smartfuel-frontend:
     build: ./frontend
     ports:
       - "80:80"
     environment:
-      - REACT_APP_API_URL=http://backend:8000
+      - REACT_APP_API_URL=http://smartfuel-backend:8000
       - REACT_APP_ENV=production
       - REACT_APP_ENABLE_AUTH=true
       - REACT_APP_ENABLE_MEAL_PLANNER=true
+      - SERVICE_NAME=smartfuel-frontend
     depends_on:
-      backend:
+      smartfuel-backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
-      interval: 15s
-      timeout: 10s
+      test: ["CMD", "/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 40s
 
-  db:
+  smartfuel-db:
     image: postgres:15
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=myDB123
-      - POSTGRES_DB=meal_plan_db2
+      - POSTGRES_DB=smartfuel_db
+      - SERVICE_NAME=smartfuel-db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - smartfuel-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 15s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 40s
 
 volumes:
-  postgres_data: 
+  smartfuel-data: 
